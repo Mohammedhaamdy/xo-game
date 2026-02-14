@@ -1,0 +1,38 @@
+body {
+  align-items: center;
+  background: #333;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+  font-family: sans-serif;
+}
+
+#gride {
+  position: relative;
+  height: 600px;
+  width: 600px;
+  background-color: #ccd2ea;
+}
+
+#gride div {
+  position: relative;
+  height: 196px;
+  width: 196px;
+  font-size: 170px;
+  border: 2px solid #333;
+  float: left;
+  text-align: center;
+}
+
+#turn {
+  color: white;
+  margin-top: 20px;
+  font-size: 50px;
+}
+
+#result {
+  color: white;
+  margin-top: 20px;
+  font-size: 50px;
+}
