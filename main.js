@@ -1,100 +1,66 @@
 let turn = "X";
-let whoIsTurn = document.getElementById("turn");
-let result = document.getElementById("result");
 let gameOver = false;
-result.innerHTML = ".....";
-whoIsTurn.innerHTML = `${turn} is turn`;
+const whoIsTurn = document.getElementById("turn");
+const result = document.getElementById("result");
+const cells = document.querySelectorAll(".cell");
+const cellsArray = Array.from(cells);
+result.textContent = ".....";
+whoIsTurn.textContent = `${turn} is turn`;
+// Win Condition
+const winningConditions = [
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8], // rows
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8], // columns
+  [0, 4, 8],
+  [2, 4, 6], // diagonals
+];
 
-let cell1 = document.getElementById("row1");
-let cell2 = document.getElementById("row2");
-let cell3 = document.getElementById("row3");
-let cell4 = document.getElementById("row4");
-let cell5 = document.getElementById("row5");
-let cell6 = document.getElementById("row6");
-let cell7 = document.getElementById("row7");
-let cell8 = document.getElementById("row8");
-let cell9 = document.getElementById("row9");
+// Winner function
+function checkWinner(player) {
+  return winningConditions.some((condition) =>
+    condition.every((index) => cells[index].textContent === player)
+  );
+}
+// Draw function
+function checkDraw() {
+  if (
+    cellsArray.every((cell) => cell.textContent !== "") &&
+    !checkWinner("X") &&
+    !checkWinner("O")
+  ) {
+    gameOver = true;
+    result.textContent = "Draw";
+  }
+}
 
 function ticTac(id) {
   let box = document.getElementById(id);
   if (gameOver) return;
   if (box.textContent !== "") return;
-  box.innerHTML = turn;
+  box.textContent = turn;
+
+  // check winner
+  if (checkWinner(turn)) {
+    gameOver = true;
+    result.textContent = `${turn} won`;
+  }
+  // Check draw
+  checkDraw();
 
   // changing turns condition
   if (turn === "X") {
     turn = "O";
-    whoIsTurn.innerHTML = `${turn} is turn`;
+    whoIsTurn.textContent = `${turn} is turn`;
   } else {
     turn = "X";
-    whoIsTurn.innerHTML = `${turn} is turn`;
+    whoIsTurn.textContent = `${turn} is turn`;
   }
 
-  //winning condition
-  if (
-    (cell1.innerHTML === "X" &&
-      cell2.innerHTML === "X" &&
-      cell3.innerHTML === "X") ||
-    (cell4.innerHTML === "X" &&
-      cell5.innerHTML === "X" &&
-      cell6.innerHTML === "X") ||
-    (cell7.innerHTML === "X" &&
-      cell8.innerHTML === "X" &&
-      cell9.innerHTML === "X") ||
-    (cell1.innerHTML === "X" &&
-      cell4.innerHTML === "X" &&
-      cell7.innerHTML === "X") ||
-    (cell2.innerHTML === "X" &&
-      cell5.innerHTML === "X" &&
-      cell8.innerHTML === "X") ||
-    (cell3.innerHTML === "X" &&
-      cell6.innerHTML === "X" &&
-      cell9.innerHTML === "X") ||
-    (cell1.innerHTML === "X" &&
-      cell5.innerHTML === "X" &&
-      cell9.innerHTML === "X") ||
-    (cell3.innerHTML === "X" &&
-      cell5.innerHTML === "X" &&
-      cell7.innerHTML === "X")
-  ) {
-    result.innerHTML = "X player is the winner";
-    gameOver = true;
-    setTimeout(() => {
-      location.reload();
-    }, 5000);
-  } else if (
-    (cell1.innerHTML === "O" &&
-      cell3.innerHTML === "O" &&
-      cell3.innerHTML === "O") ||
-    (cell4.innerHTML === "O" &&
-      cell5.innerHTML === "O" &&
-      cell6.innerHTML === "O") ||
-    (cell7.innerHTML === "O" &&
-      cell8.innerHTML === "O" &&
-      cell9.innerHTML === "O") ||
-    (cell1.innerHTML === "O" &&
-      cell4.innerHTML === "O" &&
-      cell7.innerHTML === "O") ||
-    (cell2.innerHTML === "O" &&
-      cell5.innerHTML === "O" &&
-      cell8.innerHTML === "O") ||
-    (cell3.innerHTML === "O" &&
-      cell6.innerHTML === "O" &&
-      cell9.innerHTML === "O") ||
-    (cell1.innerHTML === "O" &&
-      cell5.innerHTML === "O" &&
-      cell9.innerHTML === "O") ||
-    (cell3.innerHTML === "O" &&
-      cell5.innerHTML === "O" &&
-      cell7.innerHTML === "O")
-  ) {
-    result.innerHTML = "O player is the winner";
-    gameOver = true;
-    setTimeout(() => {
-      location.reload();
-    }, 5000);
-  }
 }
-document.querySelectorAll(".cell").forEach((cell) => {
+cells.forEach((cell) => {
   cell.addEventListener("click", () => ticTac(cell.id));
 });
+
