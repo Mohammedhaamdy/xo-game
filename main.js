@@ -1,12 +1,9 @@
-
+let turn = "X";
+let gameOver = false;
 const whoIsTurn = document.getElementById("turn");
 const result = document.getElementById("result");
 const cells = document.querySelectorAll(".cell");
 const cellsArray = Array.from(cells);
-const playerX = "X";
-const playerO = "O";
-let turn = playerX;
-let gameOver = false;
 result.textContent = ".....";
 whoIsTurn.textContent = `${turn} is turn`;
 // Win Condition
@@ -28,31 +25,15 @@ function checkWinner(player) {
   );
 }
 // Draw function
-// function checkDraw() {
-//   if (
-//     cellsArray.every((cell) => cell.textContent !== "") &&
-//     !checkWinner("X") &&
-//     !checkWinner("O")
-//   ) {
-//     gameOver = true;
-//     result.textContent = "Draw";
-//     setTimeout(resetBoard, 5000);
-//   }
-// }
-function checkDraw2() {
-  return (
+function checkDraw() {
+  if (
     cellsArray.every((cell) => cell.textContent !== "") &&
     !checkWinner("X") &&
     !checkWinner("O")
-  );
-}
-// reset game function
-function resetBoard() {
-  cells.forEach((cell) => (cell.textContent = ""));
-  gameOver = false;
-  turn = playerX;
-  whoIsTurn.textContent = `${turn} is turn`;
-  result.textContent = ".....";
+  ) {
+    gameOver = true;
+    result.textContent = "Draw";
+  }
 }
 
 function ticTac(id) {
@@ -65,18 +46,14 @@ function ticTac(id) {
   if (checkWinner(turn)) {
     gameOver = true;
     result.textContent = `${turn} won`;
-    setTimeout(resetBoard, 5000);
   }
   // Check draw
-  if (checkDraw2()) {
-    gameOver = true;
-    result.textContent = `Draw`;
-    setTimeout(resetBoard, 5000);
-  }
+  checkDraw();
 
-  turn === playerX
-    ? ((turn = playerO), (whoIsTurn.textContent = `${turn} is turn`))
-    : ((turn = playerX), (whoIsTurn.textContent = `${turn} is turn`));
+
+  turn === "X"
+    ? ((turn = "O"), (whoIsTurn.textContent = `${turn} is turn`))
+    : ((turn = "X"), (whoIsTurn.textContent = `${turn} is turn`));
 }
 cells.forEach((cell) => {
   cell.addEventListener("click", () => ticTac(cell.id));
