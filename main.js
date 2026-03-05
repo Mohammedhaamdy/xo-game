@@ -1,4 +1,3 @@
-
 const whoIsTurn = document.getElementById("turn");
 const result = document.getElementById("result");
 const cells = document.querySelectorAll(".cell");
@@ -23,7 +22,7 @@ const winningConditions = [
 
 // Winner function
 function checkWinner(player) {
-  return winningConditions.some((condition) =>
+  return winningConditions.find((condition) =>
     condition.every((index) => cells[index].textContent === player)
   );
 }
@@ -61,10 +60,12 @@ function ticTac(id) {
   if (box.textContent !== "") return;
   box.textContent = turn;
 
+  let winning = checkWinner(turn);
   // check winner
-  if (checkWinner(turn)) {
+  if (winning) {
     gameOver = true;
     result.textContent = `${turn} won`;
+    winning.forEach((index) => (cells[index].style.color = "green"));
     setTimeout(resetBoard, 5000);
   }
   // Check draw
