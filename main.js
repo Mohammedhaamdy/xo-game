@@ -50,17 +50,11 @@ function ticTac(id) {
   // Check draw
   checkDraw();
 
-  // changing turns condition
-  if (turn === "X") {
-    turn = "O";
-    whoIsTurn.textContent = `${turn} is turn`;
-  } else {
-    turn = "X";
-    whoIsTurn.textContent = `${turn} is turn`;
-  }
 
+  turn === "X"
+    ? ((turn = "O"), (whoIsTurn.textContent = `${turn} is turn`))
+    : ((turn = "X"), (whoIsTurn.textContent = `${turn} is turn`));
 }
 cells.forEach((cell) => {
   cell.addEventListener("click", () => ticTac(cell.id));
 });
-
