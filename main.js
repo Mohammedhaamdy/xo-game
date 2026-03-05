@@ -42,8 +42,8 @@ function checkWinner(player) {
 function checkDraw() {
   return (
     cellsArray.every((cell) => cell.textContent !== "") &&
-    !checkWinner("X") &&
-    !checkWinner("O")
+    !checkWinner(playerX) &&
+    !checkWinner(playerO)
   );
 }
 // reset game function
@@ -68,7 +68,7 @@ function ticTac(id) {
     setTimeout(resetBoard, 5000);
   }
   // Check draw
-  if (checkDraw2()) {
+  if (checkDraw()) {
     gameOver = true;
     result.textContent = `Draw`;
     setTimeout(resetBoard, 5000);

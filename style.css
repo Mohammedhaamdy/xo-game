@@ -1,3 +1,9 @@
+:root {
+  --grid-size: 600px;
+  --cell-size: calc((var(--grid-size) / 3) - 2px);
+  
+}
+
 body {
   align-items: center;
   background: #333;
@@ -8,21 +14,22 @@ body {
   font-family: sans-serif;
 }
 
-#gride {
-  position: relative;
-  height: 600px;
-  width: 600px;
+#grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  height: var(--grid-size);
+  width: var(--grid-size);
   background-color: #ccd2ea;
 }
 
-#gride div {
-  position: relative;
-  height: 196px;
-  width: 196px;
+#grid div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: var(--cell-size);
+  width: var(--cell-size);
+  border: 2px solid;
   font-size: 170px;
-  border: 2px solid #333;
-  float: left;
-  text-align: center;
 }
 
 #turn {
