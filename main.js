@@ -52,6 +52,7 @@ function resetBoard() {
   turn = playerX;
   whoIsTurn.textContent = `${turn} is turn`;
   result.textContent = ".....";
+  cells.forEach((cell) => (cell.style.color = ""));
 }
 
 function ticTac(id) {
