@@ -4,6 +4,7 @@ const cells = document.querySelectorAll(".cell");
 const cellsArray = Array.from(cells);
 const playerX = "X";
 const playerO = "O";
+const gameBoard = ["", "", "", "", "", "", "", "", ""];
 let turn = playerX;
 let gameOver = false;
 result.textContent = ".....";
@@ -23,43 +24,35 @@ const winningConditions = [
 // Winner function
 function checkWinner(player) {
   return winningConditions.find((condition) =>
-    condition.every((index) => cells[index].textContent === player)
+    condition.every((index) => gameBoard[index] === player),
   );
 }
-// Draw function
-// function checkDraw() {
-//   if (
-//     cellsArray.every((cell) => cell.textContent !== "") &&
-//     !checkWinner("X") &&
-//     !checkWinner("O")
-//   ) {
-//     gameOver = true;
-//     result.textContent = "Draw";
-//     setTimeout(resetBoard, 5000);
-//   }
-// }
+
 function checkDraw() {
   return (
-    cellsArray.every((cell) => cell.textContent !== "") &&
+    gameBoard.every((cell) => cell !== "") &&
     !checkWinner(playerX) &&
     !checkWinner(playerO)
   );
 }
 // reset game function
 function resetBoard() {
-  cells.forEach((cell) => (cell.textContent = ""));
+  cells.forEach((cell) => {
+    cell.textContent = "";
+    cell.style.color = "";
+  });
+  gameBoard.fill("");
   gameOver = false;
   turn = playerX;
   whoIsTurn.textContent = `${turn} is turn`;
   result.textContent = ".....";
-  cells.forEach((cell) => (cell.style.color = ""));
 }
 
-function ticTac(id) {
-  let box = document.getElementById(id);
+function ticTac(cell, index) {
   if (gameOver) return;
-  if (box.textContent !== "") return;
-  box.textContent = turn;
+  if (gameBoard[index] !== "") return;
+  gameBoard[index] = turn;
+  cell.textContent = turn;
 
   let winning = checkWinner(turn);
   // check winner
@@ -68,18 +61,22 @@ function ticTac(id) {
     result.textContent = `${turn} won`;
     winning.forEach((index) => (cells[index].style.color = "green"));
     setTimeout(resetBoard, 5000);
+    return;
   }
   // Check draw
   if (checkDraw()) {
     gameOver = true;
     result.textContent = `Draw`;
+    whoIsTurn.textContent = `.....`;
     setTimeout(resetBoard, 5000);
+    return;
   }
 
   turn === playerX
     ? ((turn = playerO), (whoIsTurn.textContent = `${turn} is turn`))
     : ((turn = playerX), (whoIsTurn.textContent = `${turn} is turn`));
 }
-cells.forEach((cell) => {
-  cell.addEventListener("click", () => ticTac(cell.id));
+cells.forEach((cell, index) => {
+  cell.addEventListener("click", () => ticTac(cell, index));
 });
+

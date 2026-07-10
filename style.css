@@ -1,12 +1,18 @@
 :root {
-  --grid-size: 600px;
+  --grid-size: 400px;
   --cell-size: calc((var(--grid-size) / 3) - 2px);
-  
+    --bg-dark: #333;
+  --text-light: white;
+  --grid-bg: #ccd2ea;
+}
+*{
+  margin: 0;
+  padding: 0;
 }
 
 body {
   align-items: center;
-  background: #333;
+  background: var(--bg-dark);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -17,29 +23,29 @@ body {
 #grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  height: var(--grid-size);
-  width: var(--grid-size);
-  background-color: #ccd2ea;
+  width: min(var(--grid-size), 90vw);
+  height: min(var(--grid-size), 90vh);
+
+  background-color: var(--grid-bg);
 }
 
 #grid div {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: var(--cell-size);
-  width: var(--cell-size);
-  border: 2px solid;
-  font-size: 170px;
+  height: min(var(--cell-size), 90vh);
+  border: 1px solid;
+  font-size: 100px;
 }
 
 #turn {
   color: white;
   margin-top: 20px;
-  font-size: 50px;
+  font-size: 35px;
 }
 
 #result {
   color: white;
   margin-top: 20px;
-  font-size: 50px;
+  font-size: 35px;
 }
