@@ -49,3 +49,6 @@ body {
   margin-top: 20px;
   font-size: 35px;
 }
+.selected {
+  outline: 3px solid yellow;
+}
