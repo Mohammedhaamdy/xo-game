@@ -1,11 +1,12 @@
 :root {
   --grid-size: 400px;
   --cell-size: calc((var(--grid-size) / 3) - 2px);
-    --bg-dark: #333;
+  --bg-dark: #333;
   --text-light: white;
   --grid-bg: #ccd2ea;
 }
-*{
+
+* {
   margin: 0;
   padding: 0;
 }
@@ -38,17 +39,18 @@ body {
   font-size: 100px;
 }
 
-#turn {
-  color: white;
+#turn,
+#result {
+  color: var(--text-light);
   margin-top: 20px;
   font-size: 35px;
 }
 
-#result {
-  color: white;
-  margin-top: 20px;
-  font-size: 35px;
-}
+
 .selected {
   outline: 3px solid yellow;
+}
+
+.winner {
+  color: green;
 }

@@ -10,6 +10,7 @@ const gameBoard = ["", "", "", "", "", "", "", "", ""];
 let turn = playerX;
 let gameOver = false;
 let selectedCell = 0;
+let timerReset;
 result.textContent = ".....";
 whoIsTurn.textContent = `${turn} is turn`;
 // Check all 8 possible winning combinations (3 rows, 3 cols, 2 diagonals)
@@ -24,6 +25,11 @@ const winningConditions = [
   [2, 4, 6], // diagonals
 ];
 // ===Game Logic===
+function render() {
+  gameBoard.forEach((e, index) => {
+    cells[index].textContent = e;
+  });
+}
 
 // Winner check function
 function checkWinner(player) {
@@ -33,38 +39,37 @@ function checkWinner(player) {
 }
 // draw check function
 function checkDraw() {
-  return (
-    gameBoard.every((cell) => cell !== "") &&
-    !checkWinner(playerX) &&
-    !checkWinner(playerO)
-  );
+  return gameBoard.every((cell) => cell !== "");
 }
 // reset function
 function resetBoard() {
   cells.forEach((cell) => {
-    cell.textContent = "";
-    cell.style.color = "";
+    cell.classList.remove("winner");
   });
   gameBoard.fill("");
+  render()
   gameOver = false;
   turn = playerX;
   selectedCell = 0;
   whoIsTurn.textContent = `${turn} is turn`;
   result.textContent = ".....";
+  updateSelection(selectedCell);
 }
 
 function ticTac(cell, index) {
   if (gameOver || gameBoard[index] !== "") return; // if game is over or cell is already filled, do nothing
   gameBoard[index] = turn;
-  cell.textContent = turn;
+  render()
+  selectedCell = index;
+  updateSelection(selectedCell);
 
   const winning = checkWinner(turn);
   // check winner
   if (winning) {
     gameOver = true;
     result.textContent = `${turn} won`;
-    winning.forEach((index) => (cells[index].style.color = "green"));
-    setTimeout(resetBoard, 5000);
+    winning.forEach((index) => cells[index].classList.add("winner"));
+    timerReset = setTimeout(resetBoard, 5000);
     return;
   }
   // Check draw
@@ -72,10 +77,9 @@ function ticTac(cell, index) {
     gameOver = true;
     result.textContent = `Draw`;
     whoIsTurn.textContent = `.....`;
-    setTimeout(resetBoard, 5000);
+    timerReset = setTimeout(resetBoard, 5000);
     return;
   }
-
   turn === playerX
     ? ((turn = playerO), (whoIsTurn.textContent = `${turn} is turn`))
     : ((turn = playerX), (whoIsTurn.textContent = `${turn} is turn`));
@@ -85,21 +89,20 @@ cells.forEach((cell, index) => {
 });
 
 //  ===Keyboard navigation===
-
-//selection update function
-function updateSelection() {
+function updateSelection(i) {
   cells.forEach((cell) => cell.classList.remove("selected"));
-  cells[selectedCell].classList.add("selected");
+  cells[i].classList.add("selected");
 }
-updateSelection(); // initial selection
+updateSelection(selectedCell); // initial selection
 document.addEventListener("keydown", (event) => {
+  event.preventDefault();
   switch (event.key) {
     case "ArrowRight":
-      if (selectedCell < 8) selectedCell++;
+      if (selectedCell % 3 < 2) selectedCell++;
       break;
 
     case "ArrowLeft":
-      if (selectedCell > 0) selectedCell--;
+      if (selectedCell % 3 > 0) selectedCell--;
       break;
 
     case "ArrowDown":
@@ -114,10 +117,9 @@ document.addEventListener("keydown", (event) => {
     case " ":
       ticTac(cells[selectedCell], selectedCell);
       break;
-
     default:
       return;
   }
 
-  updateSelection();
+  updateSelection(selectedCell);
 });
