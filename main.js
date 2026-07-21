@@ -2,6 +2,7 @@
 const whoIsTurn = document.getElementById("turn");
 const result = document.getElementById("result");
 const cells = document.querySelectorAll(".cell");
+const resetBtn = document.querySelector(".reset-btn");
 // Constants and Variables
 const playerX = "X";
 const playerO = "O";
@@ -47,7 +48,7 @@ function resetBoard() {
     cell.classList.remove("winner");
   });
   gameBoard.fill("");
-  render()
+  render();
   gameOver = false;
   turn = playerX;
   selectedCell = 0;
@@ -59,7 +60,7 @@ function resetBoard() {
 function ticTac(cell, index) {
   if (gameOver || gameBoard[index] !== "") return; // if game is over or cell is already filled, do nothing
   gameBoard[index] = turn;
-  render()
+  render();
   selectedCell = index;
   updateSelection(selectedCell);
 
@@ -88,14 +89,26 @@ cells.forEach((cell, index) => {
   cell.addEventListener("click", () => ticTac(cell, index));
 });
 
+// == Reset button ==
+resetBtn.addEventListener("click", () => {
+  clearTimeout(timerReset);
+  resetBoard();
+});
+
 //  ===Keyboard navigation===
 function updateSelection(i) {
   cells.forEach((cell) => cell.classList.remove("selected"));
   cells[i].classList.add("selected");
 }
 updateSelection(selectedCell); // initial selection
+
+const keys = ["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp", "Enter", " "];
 document.addEventListener("keydown", (event) => {
-  event.preventDefault();
+  for (let i = 0; i < keys.length; i++) {
+    if (event.key === keys[i]) {
+      event.preventDefault();
+    }
+  }
   switch (event.key) {
     case "ArrowRight":
       if (selectedCell % 3 < 2) selectedCell++;

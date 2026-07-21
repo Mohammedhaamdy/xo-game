@@ -54,3 +54,13 @@ body {
 .winner {
   color: green;
 }
+
+.reset-btn {
+  border: none;
+  width: 100px;
+  height: 30px;
+  border-radius: 5px;
+  font-weight: bold;
+  background-color: var(--grid-bg);
+  margin-top: 10px;
+}
