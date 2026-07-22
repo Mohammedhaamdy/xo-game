@@ -1,6 +1,19 @@
+:root {
+  --grid-size: 400px;
+  --cell-size: calc((var(--grid-size) / 3) - 2px);
+  --bg-dark: #333;
+  --text-light: white;
+  --grid-bg: #ccd2ea;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
 body {
   align-items: center;
-  background: #333;
+  background: var(--bg-dark);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -8,31 +21,46 @@ body {
   font-family: sans-serif;
 }
 
-#gride {
-  position: relative;
-  height: 600px;
-  width: 600px;
-  background-color: #ccd2ea;
+#grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: min(var(--grid-size), 90vw);
+  height: min(var(--grid-size), 90vh);
+
+  background-color: var(--grid-bg);
 }
 
-#gride div {
-  position: relative;
-  height: 196px;
-  width: 196px;
-  font-size: 170px;
-  border: 2px solid #333;
-  float: left;
-  text-align: center;
+#grid div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: min(var(--cell-size), 90vh);
+  border: 1px solid;
+  font-size: 100px;
 }
 
-#turn {
-  color: white;
-  margin-top: 20px;
-  font-size: 50px;
-}
-
+#turn,
 #result {
-  color: white;
+  color: var(--text-light);
   margin-top: 20px;
-  font-size: 50px;
+  font-size: 35px;
+}
+
+
+.selected {
+  outline: 3px solid yellow;
+}
+
+.winner {
+  color: green;
+}
+
+.reset-btn {
+  border: none;
+  width: 100px;
+  height: 30px;
+  border-radius: 5px;
+  font-weight: bold;
+  background-color: var(--grid-bg);
+  margin-top: 10px;
 }
