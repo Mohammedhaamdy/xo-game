@@ -55,6 +55,7 @@ function resetBoard() {
   whoIsTurn.textContent = `${turn} is turn`;
   result.textContent = ".....";
   updateSelection(selectedCell);
+  cells[selectedCell].focus();
 }
 
 function ticTac(cell, index) {
@@ -102,37 +103,44 @@ function updateSelection(i) {
 }
 updateSelection(selectedCell); // initial selection
 
+cells.forEach((cell) => {
+  cell.tabIndex = 0;
+});
+cells[selectedCell].focus();
+
 const keys = ["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp", "Enter", " "];
-document.addEventListener("keydown", (event) => {
-  for (let i = 0; i < keys.length; i++) {
-    if (event.key === keys[i]) {
-      event.preventDefault();
+cells.forEach((e) => {
+  e.addEventListener("keydown", (event) => {
+    for (let i = 0; i < keys.length; i++) {
+      if (event.key === keys[i]) {
+        event.preventDefault();
+      }
     }
-  }
-  switch (event.key) {
-    case "ArrowRight":
-      if (selectedCell % 3 < 2) selectedCell++;
-      break;
+    switch (event.key) {
+      case "ArrowRight":
+        if (selectedCell % 3 < 2) selectedCell++;
+        break;
 
-    case "ArrowLeft":
-      if (selectedCell % 3 > 0) selectedCell--;
-      break;
+      case "ArrowLeft":
+        if (selectedCell % 3 > 0) selectedCell--;
+        break;
 
-    case "ArrowDown":
-      if (selectedCell < 6) selectedCell += 3;
-      break;
+      case "ArrowDown":
+        if (selectedCell < 6) selectedCell += 3;
+        break;
 
-    case "ArrowUp":
-      if (selectedCell >= 3) selectedCell -= 3;
-      break;
+      case "ArrowUp":
+        if (selectedCell >= 3) selectedCell -= 3;
+        break;
 
-    case "Enter":
-    case " ":
-      ticTac(cells[selectedCell], selectedCell);
-      break;
-    default:
-      return;
-  }
-
-  updateSelection(selectedCell);
+      case "Enter":
+      case " ":
+        ticTac(cells[selectedCell], selectedCell);
+        break;
+      default:
+        return;
+    }
+    updateSelection(selectedCell);
+    cells[selectedCell].focus();
+  });
 });
