@@ -40,6 +40,8 @@ function reset(resetBoard, getState) {
   cells.forEach((cell) => {
     cell.classList.remove("winner");
   });
+  updateSelection(0);
+  cellFocus();
   clearTimeout(timerReset);
 }
 function updateSelection(i) {
@@ -55,4 +57,4 @@ cellFocus();
 function getDomElements() {
   return { resetButton: resetBtn, cells: cells, timerReset: timerReset };
 }
-export { getDomElements, renderGame, reset, updateSelection, cellFocus };
+export { getDomElements, renderGame, reset, updateSelection };

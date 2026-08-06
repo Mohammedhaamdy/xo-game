@@ -36,8 +36,13 @@ function checkDraw() {
 }
 
 function ticTac(index) {
-  if (gameOver || gameBoard[index] !== "")
-    return { state: getState(), winning: null, draw: false }; // if game is over or cell is already filled, do nothing
+  if (gameOver) return { state: getState(), winning: null, draw: false };
+
+  if (gameBoard[index] !== "") {
+    selectedCell = index;
+    return { state: getState(), winning: null, draw: false };
+  }
+  // if game is over or cell is already filled, do nothing
   gameBoard[index] = turn;
   selectedCell = index;
   const winning = checkWinner(turn);
@@ -53,7 +58,7 @@ function ticTac(index) {
     return { state: getState(), winning: winning, draw: draw };
   }
   turn === playerX ? (turn = playerO) : (turn = playerX);
-  return { state: getState(), winning: winning };
+  return { state: getState(), winning: winning, draw: draw };
 }
 function makeMove(move) {
   switch (move) {
