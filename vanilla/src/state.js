@@ -36,13 +36,13 @@ function checkDraw() {
 }
 
 function ticTac(index) {
+  // if game is over or cell is already filled, do nothing
   if (gameOver) return { state: getState(), winning: null, draw: false };
 
   if (gameBoard[index] !== "") {
     selectedCell = index;
     return { state: getState(), winning: null, draw: false };
   }
-  // if game is over or cell is already filled, do nothing
   gameBoard[index] = turn;
   selectedCell = index;
   const winning = checkWinner(turn);
