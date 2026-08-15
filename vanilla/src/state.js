@@ -4,6 +4,7 @@ const playerO = "O";
 let turn = playerX;
 let gameOver = false;
 let selectedCell = 0;
+let oldSelectedCell = 0;
 const winningConditions = [
   [0, 1, 2],
   [3, 4, 5],
@@ -21,6 +22,7 @@ function resetBoard() {
   gameOver = false;
   turn = playerX;
   selectedCell = 0;
+  oldSelectedCell = 0;
 }
 // Winner check function
 function checkWinner(player) {
@@ -63,15 +65,19 @@ function ticTac(index) {
 function makeMove(move) {
   switch (move) {
     case "right":
+      oldSelectedCell = selectedCell;
       selectedCell++;
       break;
     case "left":
+      oldSelectedCell = selectedCell;
       selectedCell--;
       break;
     case "down":
+      oldSelectedCell = selectedCell;
       selectedCell += 3;
       break;
     case "up":
+      oldSelectedCell = selectedCell;
       selectedCell -= 3;
       break;
   }
@@ -82,6 +88,7 @@ function getState() {
     board: gameBoard,
     turn: turn,
     selectedCell: selectedCell,
+    oldSelectedCell: oldSelectedCell,
     gameOver: gameOver,
   };
 }

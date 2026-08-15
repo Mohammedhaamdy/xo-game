@@ -61,8 +61,10 @@ function keyboard() {
         default:
           return;
       }
-      updateSelection(getState().selectedCell);
-      domElements.cells[getState().selectedCell].focus();
+      if (getState().selectedCell !== getState().oldSelectedCell) {
+        updateSelection(getState().selectedCell);
+        domElements.cells[getState().selectedCell].focus();
+      }
     });
   });
 }

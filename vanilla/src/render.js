@@ -21,8 +21,7 @@ function renderGame(getState, tictac, resetBoard) {
     timerReset = setTimeout(() => {
       reset(resetBoard, getState);
     }, 5000);
-  }
-  if (tictac.draw) {
+  } else if (tictac.draw) {
     result.textContent = "draw";
     timerReset = setTimeout(() => {
       reset(resetBoard, getState);
@@ -55,6 +54,6 @@ function cellFocus() {
 }
 cellFocus();
 function getDomElements() {
-  return { resetButton: resetBtn, cells: cells, timerReset: timerReset };
+  return { resetButton: resetBtn, cells: cells };
 }
 export { getDomElements, renderGame, reset, updateSelection };
