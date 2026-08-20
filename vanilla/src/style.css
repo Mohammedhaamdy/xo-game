@@ -1,19 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+
 :root {
-  --grid-size: 400px;
+  /* color palette */
+  --color-void: #040207;
+  --color-cabinet: #181320;
+  --color-screen: #030206;
+  --color-cell: #0c0912;
+  --color-cell-hover: #1f192b;
+  --color-border: #352f42;
+  --color-text: #f3f0f8;
+  --color-text-dim: #9a96a3;
+  --color-primary-X: #f674d0;
+  --color-secondary-O: #00dadd;
+  --color-win: #f3cb00;
+  /* spacing scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  /* font-family */
+  --press-start-2p: "Press Start 2P", system-ui;
+  --vt-323: "VT323", monospace;
+  /* type scale */
+  --text-turn: 13px;
+  --text-result: 11px;
+  --text-button: 10px;
+  --text-label: 9px;
+  --text-body: 20px;
+  --text-caption: 16px;
+
+
+  --grid-size: 250px;
   --cell-size: calc((var(--grid-size) / 3) - 2px);
   --bg-dark: #333;
   --text-light: white;
   --grid-bg: #ccd2ea;
+
+
+
 }
 
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 body {
   align-items: center;
-  background: var(--bg-dark);
+  background: var(--color-void);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -21,23 +60,46 @@ body {
   font-family: sans-serif;
 }
 
+.cabinet {
+  background-color: var(--color-cabinet);
+  padding: var(--space-3);
+  border: solid #292333 var(--space-1);
+  border-radius: var(--space-4);
+  /* width: 80%; */
+}
+
+.container {
+  background-color: var(--color-screen);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: solid #292333 var(--space-1);
+  border-radius: var(--space-3);
+  padding: var(--space-4);
+  gap: var(--space-5);
+}
+
 #grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   width: min(var(--grid-size), 90vw);
   height: min(var(--grid-size), 90vh);
-
-  background-color: var(--grid-bg);
+  background-color: var(--color-void);
+  gap: var(--space-3);
 }
 
-#grid div {
+#grid .cell {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: min(var(--cell-size), 90vh);
   border: 1px solid;
   font-size: 100px;
+  background-color: var(--color-cell);
+  outline: solid 3px var(--color-border);
+  border-radius: var(--space-3);
 }
+
+
 
 #turn,
 #result {
@@ -46,21 +108,40 @@ body {
   font-size: 35px;
 }
 
+#turn,
+#result,
+.reset-btn {
+  font-family: var(--press-start-2p);
+}
+
+#turn {
+  color: var(--color-text);
+  font-size: var(--text-turn);
+}
+
+#result {
+  color: var(--color-win);
+  font-size: var(--text-result);
+}
+
 
 .selected {
-  outline: 3px solid yellow;
+  border: none;
+  outline-color: var(--color-secondary-O) !important;
+
 }
 
 .winner {
-  color: green;
+  color: var(--color-win);
 }
 
 .reset-btn {
-  border: none;
-  width: 100px;
-  height: 30px;
+  border: solid #292333 2px;
+  padding: var(--space-2) var(--space-4);
   border-radius: 5px;
   font-weight: bold;
-  background-color: var(--grid-bg);
+  background-color: var(--color-cabinet);
+  color: var(--color-text);
   margin-top: 10px;
+  font-size: var(--text-button);
 }
