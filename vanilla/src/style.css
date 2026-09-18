@@ -26,6 +26,7 @@
   --press-start-2p: "Press Start 2P", system-ui;
   --vt-323: "VT323", monospace;
   /* type scale */
+  --text-marquee: clamp(24px, 3vw, 40px);
   --text-turn: 13px;
   --text-result: 11px;
   --text-button: 10px;
@@ -65,7 +66,9 @@ body {
   padding: var(--space-3);
   border: solid #292333 var(--space-1);
   border-radius: var(--space-4);
-  /* width: 80%; */
+  width: 50vmin;
+  aspect-ratio: 4 / 5;
+  margin-inline: auto;
 }
 
 .container {
@@ -77,35 +80,33 @@ body {
   border-radius: var(--space-3);
   padding: var(--space-4);
   gap: var(--space-5);
+  height: 100%;
 }
 
 #grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  width: min(var(--grid-size), 90vw);
-  height: min(var(--grid-size), 90vh);
+  width: 90%;
+  aspect-ratio: 1/1;
   background-color: var(--color-void);
-  gap: var(--space-3);
+  gap: clamp(var(--space-4), 1vw, var(--space-8));
 }
 
 #grid .cell {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid;
-  font-size: 100px;
   background-color: var(--color-cell);
-  outline: solid 3px var(--color-border);
-  border-radius: var(--space-3);
+  outline: solid var(--color-border);
+  outline-width: clamp(var(--space-1), 0.5vh, var(--space-6));
+  border-radius: clamp(var(--space-1), 0.5vw, var(--space-6));
 }
 
 
 
 #turn,
 #result {
-  color: var(--text-light);
   margin-top: 20px;
-  font-size: 35px;
 }
 
 #turn,
@@ -113,6 +114,7 @@ body {
 .reset-btn {
   font-family: var(--press-start-2p);
 }
+
 
 #turn {
   color: var(--color-text);
