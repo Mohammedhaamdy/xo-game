@@ -47,6 +47,7 @@ function ticTac(index) {
   }
   gameBoard[index] = turn;
   selectedCell = index;
+
   const winning = checkWinner(turn);
   const draw = checkDraw();
   // check winner

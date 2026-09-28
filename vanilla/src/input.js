@@ -1,20 +1,27 @@
-import { getDomElements, renderGame, reset, updateSelection } from "./render";
+import {
+  getDomElements,
+  renderGame,
+  reset,
+  updateSelection,
+  keyboardUpdateSelection,
+} from "./render";
 import { ticTac, resetBoard, getState, makeMove } from "./state";
 
 const domElements = getDomElements();
 
+let lastTic;
 function playCell() {
   domElements.cells.forEach((cell, index) => {
     cell.addEventListener("click", () => {
       const tic = ticTac(index);
-      renderGame(getState, tic, resetBoard);
+      lastTic = tic;
+      renderGame(getState, lastTic, resetBoard, index);
     });
   });
 }
-
 function resetBttn() {
   domElements.resetButton.addEventListener("click", () => {
-    reset(resetBoard, getState);
+    reset(resetBoard, getState, lastTic);
   });
 }
 
@@ -55,7 +62,8 @@ function keyboard() {
         case "Enter":
         case " ": {
           const tac = ticTac(getState().selectedCell);
-          renderGame(getState, tac, resetBoard);
+          lastTic = tac;
+          renderGame(getState, lastTic, resetBoard, index);
           break;
         }
         default:
