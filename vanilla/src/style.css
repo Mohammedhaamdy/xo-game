@@ -58,7 +58,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 100vh;
+  height: 100dvh;
   font-family: sans-serif;
 }
 
@@ -67,7 +67,7 @@ body {
   padding: var(--space-3);
   border: solid #292333 var(--space-1);
   border-radius: var(--space-4);
-  width: 50vmin;
+  width: min(90vw, 420px);
   aspect-ratio: 4 / 5;
   margin-inline: auto;
 }
@@ -109,8 +109,6 @@ body {
 }
 
 #grid .cell:hover {
-  /* outline: dashed var(--color-secondary-O) 3px;
-  outline-offset: var(--space-1); */
   background-color: var(--color-cell-hover);
   border-color: color-mix(in srgb, var(--color-secondary-O) 65%, transparent);
   box-shadow: 0 0 10px color-mix(in srgb, var(--color-secondary-O) 35%, transparent);
@@ -148,11 +146,7 @@ body {
   outline-color: var(--color-secondary-O) !important;
 }
 
-/* .keyboard-selected {
-  outline: dashed var(--color-secondary-O) 3px;
-  outline-offset: var(--space-1);
-  box-shadow:  0 0 12px var(--color-secondary-O);
-} */
+
 
 .winner {
   animation: winner 480ms ease-in-out forwards;
@@ -217,7 +211,7 @@ body {
   animation: winner-O 480ms ease-in-out forwards;
 }
 
-.svg-animation {
+.svg-animation:not(.reset) {
   --stagger: 0ms;
   animation: fade-in 260ms ease-in var(--stagger) forwards, opacity 260ms ease-in var(--stagger) forwards !important;
 }
@@ -353,5 +347,37 @@ body {
   to {
     opacity: 1;
     scale: 1;
+  }
+}
+
+
+
+.cont {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 64px;
+
+  width: 90%;
+}
+
+
+.reset-phone {
+  display: none;
+  background-color: transparent;
+  border: none;
+}
+
+.reset {}
+
+
+
+@media (max-width:480px) {
+  .reset-phone {
+    display: block;
+  }
+
+  .reset-btn {
+    display: none;
   }
 }

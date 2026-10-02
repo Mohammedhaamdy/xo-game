@@ -5,6 +5,7 @@ let turn = playerX;
 let gameOver = false;
 let selectedCell = 0;
 let oldSelectedCell = 0;
+let oldwinning = null;
 const winningConditions = [
   [0, 1, 2],
   [3, 4, 5],
@@ -23,6 +24,7 @@ function resetBoard() {
   turn = playerX;
   selectedCell = 0;
   oldSelectedCell = 0;
+  oldwinning = null;
 }
 // Winner check function
 function checkWinner(player) {
@@ -33,8 +35,8 @@ function checkWinner(player) {
   );
 }
 // draw check function
-function checkDraw() {
-  return gameBoard.every((cell) => cell !== "");
+function checkDraw(win) {
+  if (!win) return gameBoard.every((cell) => cell !== "");
 }
 
 function ticTac(index) {
@@ -42,14 +44,14 @@ function ticTac(index) {
   if (gameOver) return { state: getState(), winning: null, draw: false };
 
   if (gameBoard[index] !== "") {
-    selectedCell = index;
     return { state: getState(), winning: null, draw: false };
   }
   gameBoard[index] = turn;
   selectedCell = index;
 
   const winning = checkWinner(turn);
-  const draw = checkDraw();
+  const draw = checkDraw(winning);
+  oldwinning = winning;
   // check winner
   if (winning) {
     gameOver = true;
@@ -91,6 +93,7 @@ function getState() {
     selectedCell: selectedCell,
     oldSelectedCell: oldSelectedCell,
     gameOver: gameOver,
+    oldwinning: oldwinning,
   };
 }
 

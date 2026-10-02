@@ -5,34 +5,27 @@ const whoIsTurn = document.getElementById("turn");
 const result = document.getElementById("result");
 const cells = document.querySelectorAll(".cell");
 const resetBtn = document.querySelector(".reset-btn");
+const resetPhone = document.querySelector(".reset-phone");
 
 let timerReset;
-result.textContent = ".....";
-whoIsTurn.textContent = `X is turn`;
+result.textContent = "";
+whoIsTurn.textContent = `X's turn`;
 cells.forEach((cell) => {
   cell.tabIndex = 0;
 });
-function renderGame(getState, tictac, resetBoard, index) {
-  // if (!tictac) return;
-  // getState().board.forEach((e, index) => {
-  //   if (e === "") {
-  //     cells[index].textContent = e;
-  //   } else if (e === "X") {
-  //     cells[index].innerHTML = Xicon;
-  //   } else if (e === "O") {
-  //     cells[index].innerHTML = Oicon;
-  //   }
-  // });
 
+// Render Function
+function renderGame(getState, tictac, resetBoard, index) {
+  if (cells[index].innerHTML !== "") return;
   if (getState().board[index] === "") {
-    cells[index].textContent = e;
+    cells[index].textContent = "";
   } else if (getState().board[index] === "X") {
     cells[index].innerHTML = Xicon;
   } else if (getState().board[index] === "O") {
     cells[index].innerHTML = Oicon;
   }
 
-  whoIsTurn.textContent = `${getState().turn} is turn`;
+  whoIsTurn.textContent = `${getState().turn}'s turn`;
   updateSelection(getState().selectedCell);
   if (tictac.winning) {
     tictac.winning.forEach((index, winnerindex) => {
@@ -50,35 +43,47 @@ function renderGame(getState, tictac, resetBoard, index) {
     }, 5000);
   }
 }
-
+// Reset Function
 function reset(resetBoard, getState, tictac) {
   clearTimeout(timerReset);
-  const svg = document.querySelectorAll("svg");
 
+
+  // Clearing Board
   function clearBoard() {
     resetBoard();
     let animationed = 0;
     getState().board.forEach((e, index) => {
       cells[index].textContent = e;
       cells[index].classList.add("idle-board-animation");
-      cells[index].addEventListener("animationend", () => {
-        animationed++;
-        if (animationed === getState().board.length) {
-          cells.forEach((cell) => {
-            cell.classList.remove("idle-board-animation");
-          });
-        }
-      });
+      cells[index].addEventListener(
+        "animationend",
+        () => {
+          animationed++;
+          if (animationed === getState().board.length) {
+            cells.forEach((cell) => {
+              cell.classList.remove("idle-board-animation");
+            });
+          }
+        },
+        { once: true },
+      );
     });
-    result.textContent = ".....";
-    whoIsTurn.textContent = `X is turn`;
+    result.textContent = "";
+    whoIsTurn.textContent = `X's turn`;
     cells.forEach((cell) => {
       cell.classList.remove("winner");
     });
     updateSelection(0);
     cellFocus();
   }
+  if (!tictac?.winning) {
+    clearBoard();
+    return;
+  }
+  const svg = document.querySelectorAll("svg");
+
   let finished = 0;
+// Animation adding
   svg.forEach((e, index) => {
     e.style.setProperty("--stagger", `${index * 60}ms`);
     e.classList.add("svg-animation");
@@ -86,7 +91,7 @@ function reset(resetBoard, getState, tictac) {
       "animationend",
       () => {
         finished++;
-        if (finished === svg.length) {
+        if (finished === svg.length - 1) {
           let fade = 0;
           tictac.winning.forEach((e) => {
             cells[e].classList.add("winner-fade");
@@ -111,6 +116,7 @@ function reset(resetBoard, getState, tictac) {
     );
   });
 }
+// updateSelection
 function updateSelection(i) {
   cells.forEach((cell) => cell.classList.remove("selected"));
   cells[i].classList.add("selected");
@@ -125,7 +131,7 @@ function cellFocus() {
 }
 cellFocus();
 function getDomElements() {
-  return { resetButton: resetBtn, cells: cells };
+  return { resetButton: resetBtn, cells: cells, resetPhone: resetPhone };
 }
 export {
   getDomElements,
