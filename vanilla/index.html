@@ -7,22 +7,60 @@
     <title>vanilla</title>
   </head>
   <body>
-    <div id="grid">
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
+    <div class="cabinet">
+      <div class="container">
+        <div class="cont">
+          <div id="turn"></div>
+          <button class="reset-phone">
+            <svg
+            class="reset"
+              width="45"
+              height="45"
+              viewBox="0 0 160 160"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                x="5"
+                y="5"
+                width="150"
+                height="150"
+                rx="75"
+                fill="#140E1D"
+              />
+              <rect
+                x="5"
+                y="5"
+                width="150"
+                height="150"
+                rx="75"
+                stroke="#352F42"
+                stroke-width="10"
+              />
+              <path
+                d="M98.9517 54.19C105.532 58.39 112.112 67.35 112.112 79.04C112.112 95.7 98.6717 109.14 82.0117 109.14C65.3517 109.14 51.9117 95.7 51.9117 79.04C51.9117 70.64 55.2717 63.01 60.8017 57.69C57.5117 57.76 53.1717 57.13 47.9217 55.66L50.5117 52.51C58.0717 52.51 64.5817 51.25 70.0417 48.94L71.5817 50.2C70.1817 56.01 70.1117 62.66 71.4417 70.08L68.8517 73.16C66.4717 68.26 65.0717 64.13 64.5817 60.84C60.6617 64.69 56.8817 70.85 56.8817 79.04C56.8817 92.97 68.0817 104.17 82.0117 104.17C95.8717 104.17 107.142 92.97 107.142 79.04C107.142 66.79 98.5317 59.72 96.1517 58.25L98.9517 54.19Z"
+                fill="#F3F0F8"
+              />
+            </svg>
+          </button>
+        </div>
+        <div id="grid">
+          <div class="cell keyboard-selected"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
 
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
 
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+        </div>
+        <div id="result"></div>
+        <button class="reset-btn">Reset Game</button>
+      </div>
     </div>
-    <div id="turn"></div>
-    <div id="result"></div>
-    <button class="reset-btn">Reset Game</button>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

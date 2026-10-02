@@ -3,21 +3,33 @@ import { ticTac, resetBoard, getState, makeMove } from "./state";
 
 const domElements = getDomElements();
 
+let lastTic;
+// Cell move 
 function playCell() {
   domElements.cells.forEach((cell, index) => {
     cell.addEventListener("click", () => {
+      if (getState().oldwinning !== null) return;
       const tic = ticTac(index);
-      renderGame(getState, tic, resetBoard);
+      lastTic = tic;
+      renderGame(getState, lastTic, resetBoard, index);
     });
   });
 }
 
+// Button reset
 function resetBttn() {
   domElements.resetButton.addEventListener("click", () => {
-    reset(resetBoard, getState);
+    reset(resetBoard, getState, lastTic);
+
+  });
+
+  domElements.resetPhone.addEventListener("click", () => {
+    reset(resetBoard, getState, lastTic);
+
   });
 }
 
+// keyboard Function
 function keyboard() {
   const keys = [
     "ArrowRight",
@@ -54,8 +66,10 @@ function keyboard() {
 
         case "Enter":
         case " ": {
+          if (getState().oldwinning !== null) return;
           const tac = ticTac(getState().selectedCell);
-          renderGame(getState, tac, resetBoard);
+          lastTic = tac;
+          renderGame(getState, lastTic, resetBoard, index);
           break;
         }
         default:
